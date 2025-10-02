@@ -1,4 +1,17 @@
-# Project: AirBnB Clone (@Holberton)
+# Project: alu-AirBnB Clone (@Holberton)
+This repository contains the second version of the AirBnB Clone project, developed as part of the ALU Software Engineering program.
+
+The project’s goal is to gradually build a complete web application, starting from a simple command-line interface and moving towards database integration, dynamic content with Flask, and automated deployment.
+
+This version (v2) introduces:
+
+Database storage with MySQL
+
+Improved command interpreter
+
+Integration with a web framework (Flask)
+
+Automated deployment scripts using Fabric
 
 <p align='center'>
   <img src="https://github.com/jarehec/AirBnB_clone_v3/blob/master/dev/HBTN-hbnb-Final.png" width="360" height=auto />
