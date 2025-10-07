@@ -24,13 +24,13 @@ def do_deploy(archive_path):
         return False
     
     try:
-        # Upload the archive to /tmp/ directory of the web server
-        put(archive_path, '/tmp/')
-        
         # Extract filename from path
         file_name = os.path.basename(archive_path)
-        # Remove .tgz extension to get folder name
-        file_name_noext = file_name.replace('.tgz', '')
+        # Remove .tgz extension to get folder name  
+        file_name_noext = file_name.split('.')[0]
+        
+        # Upload the archive to /tmp/ directory of the web server
+        put(archive_path, '/tmp/{}'.format(file_name))
         
         # Create the release directory
         run('mkdir -p /data/web_static/releases/{}/'.format(file_name_noext))
@@ -56,5 +56,5 @@ def do_deploy(archive_path):
         print("New version deployed!")
         return True
         
-    except Exception:
+    except:
         return False
