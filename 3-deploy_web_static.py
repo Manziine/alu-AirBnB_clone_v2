@@ -13,7 +13,7 @@ env.hosts = ['34.74.23.57', '35.196.161.89']
 def do_pack():
     """
     Generates a .tgz archive from the contents of the web_static folder.
-    
+
     Returns:
         Archive path if successfully generated, None otherwise.
     """
@@ -30,10 +30,10 @@ def do_pack():
 def do_deploy(archive_path):
     """
     Distributes an archive to web servers.
-    
+
     Args:
         archive_path: Path to the archive file to deploy
-        
+
     Returns:
         True if all operations succeed, False otherwise
     """
@@ -60,7 +60,7 @@ def do_deploy(archive_path):
 def deploy():
     """
     Creates and distributes an archive to web servers.
-    
+
     Returns:
         True if deployment succeeds, False otherwise
     """

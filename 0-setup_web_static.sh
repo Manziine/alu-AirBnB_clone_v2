@@ -2,8 +2,8 @@
 # Bash script that sets up your web servers for the deployment of web_static
 
 # Install Nginx if not already installed
-sudo apt-get update
-sudo apt-get -y install nginx
+sudo apt-get update -y
+sudo apt-get install -y nginx
 
 # Create necessary directories
 sudo mkdir -p /data/web_static/releases/test/
@@ -16,7 +16,7 @@ echo "<html>
   <body>
     Holberton School
   </body>
-</html>" | sudo tee /data/web_static/releases/test/index.html
+</html>" | sudo tee /data/web_static/releases/test/index.html > /dev/null
 
 # Create or recreate symbolic link
 sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
@@ -25,7 +25,10 @@ sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
 sudo chown -R ubuntu:ubuntu /data/
 
 # Update Nginx configuration to serve content
-sudo sed -i '/listen 80 default_server;/a \\tlocation /hbnb_static {\n\t\talias /data/web_static/current/;\n\t}' /etc/nginx/sites-available/default
+# Check if location block already exists to avoid duplicates
+if ! sudo grep -q "location /hbnb_static" /etc/nginx/sites-available/default; then
+    sudo sed -i '/listen 80 default_server;/a \\tlocation /hbnb_static {\n\t\talias /data/web_static/current/;\n\t}' /etc/nginx/sites-available/default
+fi
 
 # Restart Nginx
 sudo service nginx restart
