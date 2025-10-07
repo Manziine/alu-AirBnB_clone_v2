@@ -1,0 +1,52 @@
+# Git files
+.git
+.gitignore
+
+# Python cache
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info
+dist
+build
+
+# Virtual environments
+venv
+env
+ENV
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# Test files
+tests
+test_*
+
+# Documentation
+*.md
+README.md
+
+# Deployment files
+versions
+*.tgz
+
+# Fabric files
+fabfile.py
+*fabric*.py
+
+# Models and console
+models
+console.py
+*.json
+
+# Scripts
+*.sh
+deploy_direct.py
+test_pack.py

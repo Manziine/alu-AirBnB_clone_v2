@@ -3,7 +3,7 @@
 Fabric script (based on the file 2-do_deploy_web_static.py) that creates and
 distributes an archive to your web servers, using the function deploy
 """
-from fabric.api import local, env, run, put, hosts
+from fabric.api import local, env, run, put
 from datetime import datetime
 import os
 
@@ -12,9 +12,10 @@ env.hosts = ['34.74.23.57', '35.196.161.89']
 
 def do_pack():
     """
-    create the archive file with the contents of the web_static folder
-    and return the archive path if the archive has been correctly generated
-    otherwise return None
+    Generates a .tgz archive from the contents of the web_static folder.
+    
+    Returns:
+        Archive path if successfully generated, None otherwise.
     """
     datetime_str = datetime.now().strftime("%Y%m%d%H%M%S")
     file_name = "web_static_{}.tgz".format(datetime_str)
@@ -22,17 +23,19 @@ def do_pack():
         local('mkdir -p versions')
         local('tar -cvzf versions/{} web_static'.format(file_name))
         return "versions/{}".format(file_name)
-    except:
+    except Exception:
         return None
 
 
 def do_deploy(archive_path):
     """
-    upload the archive to the /tmp/ directory of the web server
-    uncompress the archive
-    delete the archive from the web server
-    handle symbolic links
-    return True is all operations went well, False otherwise
+    Distributes an archive to web servers.
+    
+    Args:
+        archive_path: Path to the archive file to deploy
+        
+    Returns:
+        True if all operations succeed, False otherwise
     """
     if not os.path.exists(archive_path):
         return False
@@ -50,15 +53,18 @@ def do_deploy(archive_path):
         run('sudo ln -s {} /data/web_static/current'.format(new_folder))
         print("New version deployed!")
         return True
-    except:
+    except Exception:
         return False
 
 
 def deploy():
-    """calls do_pack() and do_deploy()"""
-    try:
-        archive_path = do_pack()
-        status = do_deploy(archive_path)
-        return status
-    except:
+    """
+    Creates and distributes an archive to web servers.
+    
+    Returns:
+        True if deployment succeeds, False otherwise
+    """
+    archive_path = do_pack()
+    if archive_path is None:
         return False
+    return do_deploy(archive_path)

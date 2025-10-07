@@ -3,8 +3,7 @@
 Fabric script that distributes an archive to your web servers
 using the function do_deploy
 """
-from fabric.api import env, run, put, hosts
-# from datetime import datetime
+from fabric.api import env, run, put
 import os
 
 env.hosts = ['34.74.23.57', '35.196.161.89']
@@ -12,11 +11,13 @@ env.hosts = ['34.74.23.57', '35.196.161.89']
 
 def do_deploy(archive_path):
     """
-    upload the archive to the /tmp/ directory of the web server
-    uncompress the archive
-    delete the archive from the web server
-    handle symbolic links
-    return True is all operations went well, False otherwise
+    Distributes an archive to web servers.
+    
+    Args:
+        archive_path: Path to the archive file to deploy
+        
+    Returns:
+        True if all operations succeed, False otherwise
     """
     if not os.path.exists(archive_path):
         return False
@@ -34,5 +35,5 @@ def do_deploy(archive_path):
         run('sudo ln -s {} /data/web_static/current'.format(new_folder))
         print("New version deployed!")
         return True
-    except:
+    except Exception:
         return False
